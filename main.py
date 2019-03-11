@@ -64,12 +64,18 @@ def send_close():
 # Multiprocessing implemented below
 if __name__ == "__main__":
     try:
+        # Purpose of this is not throw verbose errors
         p1 = Process(target=send_memes)
+        # Initialize the first function asynchronously
         p2 = Process(target=send_close)
+        # Initialize the second function asynchronously
         p1.start()
         p2.start()
+        # Start both functions
         print("All okay, processes started\n")
         p1.join()
         p2.join()
+        # Wait for both processes to complete before exiting the program
+        # (will never happen unless an error is thrown from APIs)
     except:
         print("Not okay, contact Hitesh now")
