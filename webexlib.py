@@ -9,6 +9,8 @@ url = "https://api.ciscospark.com/v1/"
 # API URL
 headers = {"Authorization": "Bearer " + api_key}
 
+#blank
+print(json.loads(requests.get("https://api.ciscospark.com/v1/rooms", headers={"Authorization": "Bearer Yjk1ODE5ZGUtZDQ1Yi00YmRlLTg5ZGEtMTc0OGI4MTQ4YmY2ODU4ZDA3N2QtNDE4_PF84_consumer"}).text))
 
 # Standard issue Bearer - Auth
 
