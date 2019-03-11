@@ -59,6 +59,7 @@ def send_close():
             requests.post("https://api.ciscospark.com/v1/messages?roomId=" + room, headers=headers, data=message)
             # Simply posts the requests and takes all the above variables as params
             print("Price sent to " + room)
+            time.sleep(86400)
 
 
 # Multiprocessing implemented below
