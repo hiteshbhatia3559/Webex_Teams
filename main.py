@@ -45,22 +45,31 @@ def send_memes():
 def send_close():
     while 1:
         # Loop runs indefinitely
+        # If today is the fifth day of the week (Friday)
         if datetime.date.today().weekday() == 5:
-            # If today is the fifth day of the week (Friday)
-            room = webexlib.get_screener_roomid()
             # Get the id of the room with name Screener, See webexlib.py for details
+            room = webexlib.get_screener_roomid()
+            # Get a new price from the Alpha Vantage API through the webexlib.py library and attach it to the payload
             message = {
                 "roomId": room,
                 "markdown": "MSFT's weekly price is " + str(webexlib.get_msft_price()),
             }
+            # Important : the above is a payload that is passed to the POST request, and must be in the JSON format
+            # All strings in this "dict" must be in double quotes adhering to JSON format
             requests.post("https://api.ciscospark.com/v1/messages?roomId=" + room, headers=headers, data=message)
+            # Simply posts the requests and takes all the above variables as params
+            print("Price sent to " + room)
 
 
 # Multiprocessing implemented below
 if __name__ == "__main__":
-    p1 = Process(target=send_memes)
-    p2 = Process(target=send_close)
-    p1.start()
-    p2.start()
-    p1.join()
-    p2.join()
+    try:
+        p1 = Process(target=send_memes)
+        p2 = Process(target=send_close)
+        p1.start()
+        p2.start()
+        print("All okay, processes started\n")
+        p1.join()
+        p2.join()
+    except:
+        print("Not okay, contact Hitesh now")
