@@ -5,5 +5,5 @@ These can be any two tasks of your choosing. Be creative and use your imaginatio
 ```
 
 List of tasks to implement:
-1. Send a new kanye west to all spaces every week
-2. For all new persons this week, make a new space and add all new persons
+1. Send a new kanye west quote to all spaces every week
+2. Send the close price of Microsoft every Friday to the Screener space

@@ -1,9 +1,10 @@
-from multiprocessing import Pool
+from multiprocessing import Process
 import requests
 import json
 from api_key import api_key
 import datetime
 import webexlib
+import time
 
 url = "https://api.ciscospark.com/v1/"
 # This is the API URL, after which each endpoint is defined
@@ -17,8 +18,8 @@ headers = {"Authorization": "Bearer " + api_key}
 def send_memes():
     while 1:
         # Loop runs indefinitely
-        if (datetime.date.today().weekday() == 0) and (datetime.time(hour=10, minute=0, second=0, microsecond=0)):
-            # If today is the first day of the week (Monday) and the time is 10:00 AM
+        if datetime.date.today().weekday() == 0:
+            # If today is the first day of the week (Monday
             for room in webexlib.get_room_ids(url, headers):
                 # For every Room ID for this token
                 kanye_rest = json.loads(requests.get("https://api.kanye.rest").text)['quote']
@@ -35,5 +36,31 @@ def send_memes():
                 requests.post("https://api.ciscospark.com/v1/messages?roomId=" + room, headers=headers,
                               data=message)
                 # Simply posts the requests and takes all the above variables as params
+                print("Sent message " + message["markdown"] + " to " + room)
+
+        time.sleep(86400)
+        # If not Monday, sleep for one day
 
 
+def send_close():
+    while 1:
+        # Loop runs indefinitely
+        if datetime.date.today().weekday() == 5:
+            # If today is the fifth day of the week (Friday)
+            room = webexlib.get_screener_roomid()
+            # Get the id of the room with name Screener, See webexlib.py for details
+            message = {
+                "roomId": room,
+                "markdown": "MSFT's weekly price is " + str(webexlib.get_msft_price()),
+            }
+            requests.post("https://api.ciscospark.com/v1/messages?roomId=" + room, headers=headers, data=message)
+
+
+# Multiprocessing implemented below
+if __name__ == "__main__":
+    p1 = Process(target=send_memes)
+    p2 = Process(target=send_close)
+    p1.start()
+    p2.start()
+    p1.join()
+    p2.join()

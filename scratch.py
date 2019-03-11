@@ -6,8 +6,8 @@ api_key = "NjdhNGU4MmQtNjAwMy00ZTU3LWJmZmQtNjQxMjg2YTc0NzU3NWQzM2YwNmQtMTQx_PF84
 url = 'https://api.ciscospark.com/v1/'
 
 headers = {"Authorization": "Bearer " + api_key}
-#
-# response = requests.get(url, headers=headers).text
+
+# response = requests.get(url+"/rooms", headers=headers).text
 #
 # actual = json.loads(response)
 #
@@ -16,7 +16,7 @@ headers = {"Authorization": "Bearer " + api_key}
 # for item in actual['items']:
 #     details.append(item)
 #
-# roomId = details[2]['roomId']
+# roomId = details[2]['id']
 #
 # print(roomId)
 # # Gets messages from room
@@ -26,8 +26,10 @@ headers = {"Authorization": "Bearer " + api_key}
 #
 # message = {
 #   "roomId": roomId,
-#   "markdown": "Hi"
+#   "markdown": "Hi "+roomId
 # }
 #
 # response3 = requests.post("https://api.ciscospark.com/v1/messages?roomId=" + roomId,headers=headers,data=message)
+#
 
+response = requests.post(url=url+"people",headers=headers,)
